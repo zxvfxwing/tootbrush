@@ -1,4 +1,0 @@
-/home/spoken/Git/tootbrush/build/CMakeFiles/rebuild_cache.dir
-/home/spoken/Git/tootbrush/build/CMakeFiles/tootbrush.dir
-/home/spoken/Git/tootbrush/build/CMakeFiles/edit_cache.dir
-/home/spoken/Git/tootbrush/build/CMakeFiles/tootbrush_autogen.dir
