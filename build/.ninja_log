@@ -1,0 +1,13 @@
+# ninja log v5
+251	2227	1553967292509252643	CMakeFiles/tootbrush.dir/src/request.cpp.o	e957f19491a2e369
+251	2628	1553967292912590866	CMakeFiles/tootbrush.dir/tootbrush_autogen/mocs_compilation.cpp.o	f41ca3092026527c
+1	21	0	tootbrush_autogen/mocs_compilation.cpp	5ec8a1e38e006231
+21	2482	1553968501496162426	CMakeFiles/tootbrush.dir/src/mainwindow.cpp.o	544bc6d3aefb4177
+2482	2988	1553968501999498327	tootbrush	cef254cad2fc00e
+273	2682	1553965149436934936	CMakeFiles/tootbrush.dir/src/main.cpp.o	c04e02292490b76e
+2	28	0	CMakeFiles/tootbrush_autogen	5ec8a1e38e006231
+2	28	0	tootbrush_autogen/mocs_compilation.cpp	5ec8a1e38e006231
+1	23	0	CMakeFiles/tootbrush_autogen	5ec8a1e38e006231
+1	23	0	tootbrush_autogen/mocs_compilation.cpp	5ec8a1e38e006231
+23	2420	1553969119709261192	CMakeFiles/tootbrush.dir/src/mainwindow.cpp.o	544bc6d3aefb4177
+2420	2930	1553969120212597005	tootbrush	cef254cad2fc00e
