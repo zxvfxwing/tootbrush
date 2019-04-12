@@ -61,9 +61,17 @@ MainWindow::http_request()
     datas.addQueryItem("website", "https://spokonline.net");
 
     HttpClient* client = new HttpClient(this);
-    client->set_header("User-Agent", "tootbrush");
-    client->set_header("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 
-    QByteArray r = client->POST(mastodon_api_v1_apps, datas);
-    std::cerr << r.toStdString() << std::endl;
+    client->ping_host(mastodon_api_v1_apps.host());
+    client->set_header("User-Agent", "tootbrush")
+          ->set_header("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+
+    QByteArray answer;
+    if( client->POST(mastodon_api_v1_apps, datas, answer) )
+        std::cerr << answer.toStdString() << std::endl;
+
+    //QJsonDocument json = QJsonDocument::fromJson(answer);
+    QFile json("test.json");
+    json.open(QFile::WriteOnly);
+    json.write(answer);
 }

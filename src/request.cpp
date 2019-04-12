@@ -14,17 +14,6 @@ HttpClient::~HttpClient()
     delete headers;
 }
 
-const QByteArray
-HttpClient::process_request(QNetworkReply* r) const
-{
-    while(!r->isFinished()){
-        qApp->processEvents();
-    }
-
-    r->deleteLater();
-    return r->readAll();
-}
-
 QNetworkRequest
 HttpClient::build_request(const QUrl& url) const
 {
@@ -38,20 +27,53 @@ HttpClient::build_request(const QUrl& url) const
     return req;
 }
 
-const QByteArray
-HttpClient::GET(const QUrl& url)
+bool
+HttpClient::process_request(QNetworkReply* reply, QByteArray& answer) const
 {
-    return process_request(nam->get(build_request(url)));
+    while( !reply->isFinished() )
+        qApp->processEvents();
+
+    reply->deleteLater();
+
+    if( reply->error() != QNetworkReply::NoError ){
+        answer = "Failed";
+        return false;
+    }
+
+    answer = reply->readAll();
+    return true;
 }
 
-const QByteArray
-HttpClient::POST(const QUrl& url, const QUrlQuery& query)
+void
+HttpClient::ping_host(const QString& host) const
+{
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+
+    QList<QByteArray> next_protocols = {
+        QByteArray(QSslConfiguration::NextProtocolSpdy3_0)
+    };
+
+    config.setAllowedNextProtocols(next_protocols);
+    nam->connectToHostEncrypted(host, 443, config);
+}
+
+bool
+HttpClient::GET(const QUrl& url, QByteArray& answer) const
 {
     return process_request(
-        nam->post(
-            build_request(url),
-            query.toString(QUrl::FullyEncoded).toUtf8()
-    ));
+        nam->get(build_request(url)),
+        answer
+    );
+}
+
+bool
+HttpClient::POST(const QUrl& url, const QUrlQuery& body, QByteArray& answer) const
+{
+    return process_request(
+        nam->post(build_request(url),
+        body.toString(QUrl::FullyEncoded).toUtf8()),
+        answer
+    );
 }
 
 HttpClient*

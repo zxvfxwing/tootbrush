@@ -8,6 +8,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QUrlQuery>
+#include <QSslConfiguration>
 
 class HttpClient : public QObject {
     Q_OBJECT
@@ -15,16 +16,18 @@ class HttpClient : public QObject {
 private:
     QNetworkAccessManager* nam;
     QMap<QByteArray, QByteArray>* headers;
-
-    const QByteArray process_request(QNetworkReply*) const;
     QNetworkRequest build_request(const QUrl&) const;
+
+    bool process_request(QNetworkReply* reply, QByteArray& answer) const;
 
 public:
     explicit HttpClient(QObject* parent=nullptr);
     virtual ~HttpClient();
 
-    const QByteArray GET(const QUrl&);
-    const QByteArray POST(const QUrl&, const QUrlQuery&);
+    void ping_host(const QString& host) const;
+
+    bool GET(const QUrl& url, QByteArray& answer) const;
+    bool POST(const QUrl& url, const QUrlQuery& body, QByteArray& answer) const;
 
     HttpClient* set_header(const QByteArray& header, const QByteArray& value);
     HttpClient* remove_header(const QByteArray& header);
