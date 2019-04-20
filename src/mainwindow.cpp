@@ -64,11 +64,21 @@ MainWindow::http_request()
 
     client->ping_host(mastodon_api_v1_apps.host());
     client->set_header("User-Agent", "tootbrush")
+          ->set_accepted_timeout(5000)
           ->set_header("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 
     QByteArray answer;
+    std::cerr << client->GET(QUrl("https://spokonline.net"), answer) << std::endl;
+    client->GET(QUrl("https://spokonline.net"), answer);
+    client->GET(QUrl("https://spokonline.net"), answer);
+    client->GET(QUrl("https://spokonline.net"), answer);
+    client->GET(QUrl("https://spokonline.net"), answer);
+    std::cerr << answer.toStdString() << std::endl;
+
+    /*
     if( client->POST(mastodon_api_v1_apps, datas, answer) )
         std::cerr << answer.toStdString() << std::endl;
+    */
 
     //QJsonDocument json = QJsonDocument::fromJson(answer);
     QFile json("test.json");
